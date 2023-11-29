@@ -1,10 +1,9 @@
-import { SynonymsList } from "@/components/SynonimsList";
-import { TranslationForm } from "@/components/TranslateForm";
+import { HomePage } from "@/Pages/HomePage";
 
 export default function Home() {
   return (
     <main>
-      <TranslationForm />
+      <HomePage />
     </main>
   );
 }

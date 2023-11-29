@@ -1,0 +1,20 @@
+.example {
+  &__list {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
+  &__item {
+    border-bottom: 1px solid lightgrey;
+    padding-block: 10px;
+  }
+
+  &__source {
+    color: rgb(7, 80, 214);
+    margin-bottom: 5px;
+  }
+
+  &__target {
+    margin-left: 10px;
+  }
+}

@@ -1,13 +1,19 @@
 import { IExamples } from "@/functions/functions";
+import "@/styles/ExampleList.scss";
 
 export function ExampleList({ examples }: IExamples) {
   return (
-    <ul>
+    <div className="example__list">
       {examples?.map((example, index) => (
-        <li key={example.id}>
-          {example.source} : {example.target}
-        </li>
+        <div className="example__item">
+          <div key={example.id} className="example__source">
+            {example.source}
+          </div>
+          <div key={example.id} className="example__target">
+            {example.target}
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

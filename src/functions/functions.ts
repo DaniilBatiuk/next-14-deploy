@@ -1,7 +1,5 @@
 "use server";
 
-import next from "next";
-
 const Reverso = require("reverso-api");
 const reverso = new Reverso();
 
@@ -36,14 +34,16 @@ export interface TranslationResult {
 
 export async function Translate(prevState: any, formData: FormData): Promise<TranslationResult> {
   const word = formData.get("word");
+  const languageFrom = formData.get("languageFrom");
+  const languageTo = formData.get("languageTo");
+
+  console.log(languageFrom, languageTo);
   try {
-    const responseTranslations: ITranslations = await reverso.getTranslation(word, "english", "russian");
+    const responseTranslations: ITranslations = await reverso.getTranslation(word, languageFrom, languageTo);
 
-    const responseSynonyms: ISynonyms = await reverso.getSynonyms(word, "english");
+    const responseSynonyms: ISynonyms = await reverso.getSynonyms(responseTranslations.translations[0], languageTo);
 
-    const responseExamples: IExamples = await reverso.getContext(word, "english", "russian");
-
-    console.log(responseTranslations, responseSynonyms, responseExamples);
+    const responseExamples: IExamples = await reverso.getContext(word, languageFrom, languageTo);
 
     return {
       translations: responseTranslations.translations,
@@ -55,10 +55,3 @@ export async function Translate(prevState: any, formData: FormData): Promise<Tra
     return { translations: [], synonyms: [], examples: [] };
   }
 }
-
-// export const Syn = async (word: string) => {
-//   await reverso.getSynonyms(word, "english"),
-//   next:{
-//     tags:["synonyms"]
-//   }
-// };
