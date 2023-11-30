@@ -1,5 +1,7 @@
 "use server";
 
+import { dictionary } from "@/app/utils/dictionary";
+
 const Reverso = require("reverso-api");
 const reverso = new Reverso();
 
@@ -55,3 +57,11 @@ export async function Translate(prevState: any, formData: FormData): Promise<Tra
     return { translations: [], synonyms: [], examples: [] };
   }
 }
+
+export const handleAddWord = async (word: string, translations: string[]) => {
+  dictionary.push({
+    word: word,
+    translations: translations,
+  });
+  console.log(dictionary);
+};

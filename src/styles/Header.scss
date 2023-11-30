@@ -1,0 +1,18 @@
+.header {
+  position: fixed;
+  font-size: 25px;
+  width: 100%;
+  font-weight: 600;
+  background-color: rgb(235, 245, 255);
+  color: black;
+  z-index: 10;
+  border-bottom: 2px solid rgb(17, 131, 238);
+
+  &__container {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+}

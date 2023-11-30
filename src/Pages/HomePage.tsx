@@ -19,7 +19,7 @@ export function HomePage() {
   console.log(state);
   return (
     <div className="home__container">
-      <TranslationForm formAction={formAction} />
+      <TranslationForm formAction={formAction} state={state} />
       <TranslationsList translations={state.translations} />
       <ExampleList examples={state.examples} />
     </div>

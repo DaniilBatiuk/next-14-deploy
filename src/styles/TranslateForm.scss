@@ -1,32 +1,37 @@
 .form {
+  margin-top: 80px;
   display: flex;
   font-size: 20px;
-  padding-top: 50px;
+  padding: 18px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-
+  background-color: rgb(235, 245, 255);
+  border-radius: 20px;
   @media (max-width: 810px) {
     flex-direction: column;
     justify-content: flex-start;
   }
   &__icon__input {
     position: relative;
+    display: flex;
   }
 
   &__icon {
+    cursor: pointer;
     position: absolute;
-    top: 10%;
+    top: 13%;
     right: 2%;
     color: rgb(64, 139, 209);
+
     &:hover {
       color: rgb(31, 98, 160);
     }
   }
 
   &__input {
-    max-width: 400px;
-    font-size: 24px;
+    max-width: 250px;
+    font-size: 21px;
     padding: 5px 10px;
     outline: none !important;
     border: 2px solid rgb(64, 139, 209);
@@ -34,9 +39,6 @@
     transition: 0.3s;
     font-weight: 500;
 
-    @media (max-width: 420px) {
-      width: 100%;
-    }
     &:hover {
       border: 2px solid rgb(31, 98, 160);
     }
@@ -47,13 +49,13 @@
   }
 
   &__select {
-    font-size: 24px;
-    padding: 5px 10px;
+    font-size: 21px;
+    padding: 5px 5px;
     border: 2px solid rgb(64, 139, 209);
     border-radius: 7px;
     transition: 0.3s;
     font-weight: 500;
-
+    background-color: white;
     &:hover {
       border: 2px solid rgb(31, 98, 160);
     }

@@ -3,13 +3,13 @@ import "@/styles/ExampleList.scss";
 
 export function ExampleList({ examples }: IExamples) {
   return (
-    <div className="example__list">
+    <div className={examples.length > 0 ? "example__list" : ""}>
       {examples?.map((example, index) => (
-        <div className="example__item">
-          <div key={example.id} className="example__source">
+        <div className="example__item" key={"example_" + example.source + example.target}>
+          <div key={"from_" + example.id + example.source} className="example__source">
             {example.source}
           </div>
-          <div key={example.id} className="example__target">
+          <div key={"to_" + example.id + example.target} className="example__target">
             {example.target}
           </div>
         </div>
