@@ -2,7 +2,8 @@
 
 import "@/styles/UpdateTranslation.scss";
 import Modal from "./Modal";
-import { ITranslations } from "@/app/utils/dictionary";
+import { ITranslations } from "@/utils/dictionary";
+import { handleUpdateById } from "@/functions/functions";
 
 export interface IUpdateTranslation {
   active: boolean;
@@ -11,10 +12,20 @@ export interface IUpdateTranslation {
 }
 
 export function UpdateTranslation({ active, setActive, translation }: IUpdateTranslation) {
-  function onSubmit(formData: FormData) {}
+  function onSubmit(formData: FormData) {
+    const word = formData.get("word") as string | null;
+
+    const translationString = formData.get("translation") as string | null;
+    const translations = translationString ? translationString.split(",") : [];
+
+    if (translations && word) {
+      handleUpdateById(translation._id, word, translations);
+      setActive(false);
+    }
+  }
 
   return (
-    <form action={onSubmit} noValidate onClick={e => e.preventDefault()}>
+    <form action={onSubmit} noValidate>
       <Modal active={active}>
         <div className="modal__content">
           <div className="modal__header">
@@ -30,12 +41,12 @@ export function UpdateTranslation({ active, setActive, translation }: IUpdateTra
           <label htmlFor="word" className="modal__label">
             Word
           </label>
-          <input type="text" required defaultValue={translation.word} id="word" className="modal__input"></input>
+          <input type="text" required defaultValue={translation.word} id="word" name="word" className="modal__input"></input>
           <label htmlFor="translations" className="modal__label">
             Translations
           </label>
           <div className="modal__list" id="translations">
-            {translation.translations.length > 0 && <input className="modal__input" defaultValue={translation.translations.join(", ")} />}
+            {translation.translations.length > 0 && <input className="modal__input" id="translation" name="translation" defaultValue={translation.translations.join(", ")} />}
           </div>
           <button type="submit" className="modal__button">
             Save

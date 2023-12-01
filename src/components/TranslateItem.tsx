@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { UpdateTranslation } from "./UpdateTranslation";
-import { ITranslations } from "@/app/utils/dictionary";
+import { ITranslations } from "@/utils/dictionary";
+import { handleDeleteById } from "@/functions/functions";
 
 interface TranslateItemProps {
   translateItem: ITranslations;
@@ -29,7 +30,7 @@ export function TranslateItem({ translateItem }: TranslateItemProps) {
               />
             </svg>
           </button>
-          <button className="dictionary__delete">
+          <button className="dictionary__delete" onClick={() => handleDeleteById(translateItem._id)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
               <path
                 fill="currentColor"

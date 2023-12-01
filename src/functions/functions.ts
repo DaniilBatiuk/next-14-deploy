@@ -1,11 +1,13 @@
 "use server";
 
-import { dictionary } from "@/app/utils/dictionary";
+import { ITranslations } from "@/utils/dictionary";
+import Translation from "@/app/(models)/translate";
+import { revalidatePath } from "next/cache";
 
 const Reverso = require("reverso-api");
 const reverso = new Reverso();
 
-export interface ITranslations {
+export interface ITranslationsGet {
   translations: string[];
 }
 
@@ -41,7 +43,7 @@ export async function Translate(prevState: any, formData: FormData): Promise<Tra
 
   console.log(languageFrom, languageTo);
   try {
-    const responseTranslations: ITranslations = await reverso.getTranslation(word, languageFrom, languageTo);
+    const responseTranslations: ITranslationsGet = await reverso.getTranslation(word, languageFrom, languageTo);
 
     const responseSynonyms: ISynonyms = await reverso.getSynonyms(responseTranslations.translations[0], languageTo);
 
@@ -59,9 +61,54 @@ export async function Translate(prevState: any, formData: FormData): Promise<Tra
 }
 
 export const handleAddWord = async (word: string, translations: string[]) => {
-  dictionary.push({
-    word: word,
-    translations: translations,
-  });
-  console.log(dictionary);
+  try {
+    const translationData = { word, translations };
+
+    await Translation.create(translationData);
+    console.log("Translation created");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const handleGetAllTranslations = async (): Promise<ITranslations[]> => {
+  try {
+    const rawTranslationData = (await Translation.find()).reverse();
+
+    const res = JSON.parse(JSON.stringify(rawTranslationData)) as ITranslations[];
+
+    console.log("Translation got all");
+    return res;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const handleDeleteById = async (id: string) => {
+  try {
+    await Translation.findByIdAndDelete(id);
+
+    console.log("Translation has been deleted by Id");
+    revalidatePath("/dictionary");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const handleUpdateById = async (_id: string, word: string, translations: string[]) => {
+  try {
+    await Translation.updateOne(
+      { _id: _id },
+      {
+        word: word,
+        translations: translations,
+      },
+    );
+
+    console.log("Translation has been updated by Id");
+    revalidatePath("/dictionary");
+  } catch (err) {
+    console.log(err);
+  }
 };

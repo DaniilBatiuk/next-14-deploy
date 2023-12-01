@@ -1,6 +1,5 @@
 "use client";
 
-import { dictionary } from "@/app/utils/dictionary";
 import { languagesList } from "@/constants/languages";
 import { TranslationResult, handleAddWord } from "@/functions/functions";
 import "@/styles/TranslateForm.scss";
