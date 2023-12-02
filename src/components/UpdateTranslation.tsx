@@ -2,8 +2,7 @@
 
 import "@/styles/UpdateTranslation.scss";
 import Modal from "./Modal";
-import { ITranslations } from "@/utils/dictionary";
-import { handleUpdateById } from "@/functions/functions";
+import { ITranslations, handleUpdateById } from "@/functions/functions";
 
 export interface IUpdateTranslation {
   active: boolean;

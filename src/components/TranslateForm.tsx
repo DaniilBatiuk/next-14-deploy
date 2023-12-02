@@ -1,9 +1,9 @@
 "use client";
 
 import { languagesList } from "@/constants/languages";
-import { TranslationResult, handleAddWord } from "@/functions/functions";
+import { TranslationResult, handleAddWord, handleIsExistTranslations } from "@/functions/functions";
 import "@/styles/TranslateForm.scss";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface TranslationFormProps {
   formAction: any;
@@ -11,10 +11,25 @@ interface TranslationFormProps {
 }
 
 export function TranslationForm({ formAction, state }: TranslationFormProps) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isExist, setIsExist] = useState<boolean>(false);
   const languages = languagesList;
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+
+    formAction(formData);
+
+    if (inputRef.current && inputRef.current?.value !== "") {
+      const isExist = await handleIsExistTranslations(inputRef.current.value);
+      setIsExist(isExist);
+    }
+  }
+
   return (
-    <form action={formAction} className="form">
+    <form onSubmit={onSubmit} className="form">
       <div className="form__languages">
         <select name="languageFrom" id="languageFrom" defaultValue="English" className="form__select">
           {languages &&
@@ -42,8 +57,13 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             width="32"
             height="32"
             viewBox="0 0 24 24"
-            className="form__icon"
-            onClick={() => inputRef.current && inputRef.current?.value !== "" && handleAddWord(inputRef.current.value, state.translations.slice(0, 3))}
+            className={isExist ? "form__icon2" : "form__icon"}
+            onClick={() => {
+              if (inputRef.current && inputRef.current?.value !== "") {
+                setIsExist(true);
+                handleAddWord(inputRef.current.value, state.translations.slice(0, 3));
+              }
+            }}
           >
             <path
               fill="currentColor"

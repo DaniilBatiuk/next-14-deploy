@@ -29,6 +29,18 @@
     }
   }
 
+  &__icon2 {
+    cursor: pointer;
+    position: absolute;
+    top: 13%;
+    right: 2%;
+    color: rgb(255, 166, 0);
+
+    &:hover {
+      color: rgb(255, 123, 0);
+    }
+  }
+
   &__input {
     max-width: 250px;
     font-size: 21px;
@@ -50,7 +62,7 @@
 
   &__select {
     font-size: 21px;
-    padding: 5px 5px;
+    padding: 5px 8px;
     border: 2px solid rgb(64, 139, 209);
     border-radius: 7px;
     transition: 0.3s;

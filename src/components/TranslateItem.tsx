@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { UpdateTranslation } from "./UpdateTranslation";
-import { ITranslations } from "@/utils/dictionary";
-import { handleDeleteById } from "@/functions/functions";
+import { ITranslations, handleDeleteById } from "@/functions/functions";
 
 interface TranslateItemProps {
   translateItem: ITranslations;

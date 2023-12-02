@@ -1,11 +1,16 @@
 "use server";
 
-import { ITranslations } from "@/utils/dictionary";
 import Translation from "@/app/(models)/translate";
 import { revalidatePath } from "next/cache";
 
 const Reverso = require("reverso-api");
 const reverso = new Reverso();
+
+export interface ITranslations {
+  _id: string;
+  word: string;
+  translations: string[];
+}
 
 export interface ITranslationsGet {
   translations: string[];
@@ -37,7 +42,7 @@ export interface TranslationResult {
 }
 
 export async function Translate(prevState: any, formData: FormData): Promise<TranslationResult> {
-  const word = formData.get("word");
+  const word = formData.get("word")?.toString();
   const languageFrom = formData.get("languageFrom");
   const languageTo = formData.get("languageTo");
 
@@ -64,8 +69,13 @@ export const handleAddWord = async (word: string, translations: string[]) => {
   try {
     const translationData = { word, translations };
 
-    await Translation.create(translationData);
-    console.log("Translation created");
+    if (await handleIsExistTranslations(word)) {
+      console.log("Translation is already exist");
+    } else {
+      await Translation.create(translationData);
+      console.log("Translation created");
+      revalidatePath("/dictionary");
+    }
   } catch (err) {
     console.log(err);
   }
@@ -110,5 +120,20 @@ export const handleUpdateById = async (_id: string, word: string, translations: 
     revalidatePath("/dictionary");
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const handleIsExistTranslations = async (word: string): Promise<boolean> => {
+  try {
+    const rawTranslationData = await Translation.findOne({
+      word: word,
+    });
+
+    console.log("Translation search by word");
+
+    return rawTranslationData ? true : false;
+  } catch (err) {
+    console.log(err);
+    return false;
   }
 };
