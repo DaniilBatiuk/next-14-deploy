@@ -1,7 +1,6 @@
-import { ITranslations } from "@/utils/dictionary";
 import { TranslateItem } from "@/components/TranslateItem";
 import "@/styles/DictionaryPage.scss";
-import { handleGetAllTranslations } from "@/functions/functions";
+import { ITranslations, handleGetAllTranslations } from "@/functions/functions";
 
 export async function DictionaryPage() {
   const res = await handleGetAllTranslations();
