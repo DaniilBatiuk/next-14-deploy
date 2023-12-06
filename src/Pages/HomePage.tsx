@@ -2,10 +2,9 @@
 import "@/styles/HomePage.scss";
 
 import { ExampleList } from "@/components/ExampleList";
-import { SynonymsList } from "@/components/SynonimsList";
 import { TranslationForm } from "@/components/TranslateForm";
 import { TranslationsList } from "@/components/TranslationsList";
-import { Translate, TranslationResult } from "@/functions/functions";
+import { Translate } from "@/functions/functions";
 import { useFormState } from "react-dom";
 
 const initialState = {
@@ -16,7 +15,6 @@ const initialState = {
 
 export function HomePage() {
   const [state, formAction] = useFormState(Translate, initialState);
-  console.log(state);
   return (
     <div className="home__container">
       <TranslationForm formAction={formAction} state={state} />

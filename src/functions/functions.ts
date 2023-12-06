@@ -41,6 +41,21 @@ export interface TranslationResult {
   examples: IExample[];
 }
 
+export interface IOneTranslation {
+  word: string;
+  translation: string;
+}
+
+export interface ITrue {
+  word: string;
+  isTrue: boolean;
+}
+
+export interface ITest {
+  word: string;
+  translations: ITrue[];
+}
+
 export async function Translate(prevState: any, formData: FormData): Promise<TranslationResult> {
   const word = formData.get("word")?.toString();
   const languageFrom = formData.get("languageFrom");
@@ -137,3 +152,60 @@ export const handleIsExistTranslations = async (word: string): Promise<boolean> 
     return false;
   }
 };
+
+export const handleGetTest = async (): Promise<ITest[]> => {
+  try {
+    const allTranslations = await handleGetAllTranslations();
+
+    const res = JSON.parse(JSON.stringify(allTranslations)) as ITranslations[];
+
+    const newArray: IOneTranslation[] = res.map(obj => ({
+      word: obj.word,
+      translation: obj.translations[0],
+    }));
+
+    const testArray: ITest[] = createTestArray(newArray);
+
+    console.log("Created test");
+    return testArray;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+function createTestArray(originalArray: IOneTranslation[]): ITest[] {
+  return originalArray.map(obj => {
+    const correctTranslation: ITrue = {
+      word: obj.translation,
+      isTrue: true,
+    };
+
+    const otherTranslations = originalArray
+      .filter(o => o.word !== obj.word)
+      .map(o => ({
+        word: o.translation,
+        isTrue: false,
+      }));
+
+    const randomOptions = shuffleArray(otherTranslations).slice(0, 3);
+
+    const allOptions = shuffleArray([correctTranslation, ...randomOptions]);
+
+    return {
+      word: obj.word,
+      translations: allOptions,
+    };
+  });
+}
+
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffledArray = [...array];
+
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+
+  return shuffledArray;
+}
