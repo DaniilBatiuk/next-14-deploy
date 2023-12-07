@@ -60,7 +60,16 @@
     }
   }
 
+  &__languages {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   &__select {
+    width: 49%;
     font-size: 21px;
     padding: 5px 8px;
     border: 2px solid rgb(64, 139, 209);
@@ -91,14 +100,6 @@
     &:hover {
       background-color: rgb(31, 98, 160);
     }
-  }
-
-  &__languages {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
-    flex-wrap: wrap;
   }
 
   &__search {

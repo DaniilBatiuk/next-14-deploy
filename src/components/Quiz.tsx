@@ -8,7 +8,7 @@ export function Quiz({ word, translations }: ITest) {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isClickedWord, setIsClickedWord] = useState<string>("");
   return (
-    <>
+    <div className="quiz">
       <div className="quiz__main__word">{word}</div>
       <div className="quiz__list">
         {translations &&
@@ -26,6 +26,6 @@ export function Quiz({ word, translations }: ITest) {
             </button>
           ))}
       </div>
-    </>
+    </div>
   );
 }

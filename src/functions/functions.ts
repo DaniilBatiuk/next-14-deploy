@@ -167,7 +167,28 @@ export const handleGetTest = async (): Promise<ITest[]> => {
     const testArray: ITest[] = createTestArray(newArray);
 
     console.log("Created test");
-    return testArray;
+    return shuffleArray(testArray);
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const handleGetTestTwenty = async (): Promise<ITest[]> => {
+  try {
+    const allTranslations = await (await handleGetAllTranslations()).slice(0, 20);
+
+    const res = JSON.parse(JSON.stringify(allTranslations)) as ITranslations[];
+
+    const newArray: IOneTranslation[] = res.map(obj => ({
+      word: obj.word,
+      translation: obj.translations[0],
+    }));
+
+    const testArray: ITest[] = createTestArray(newArray);
+
+    console.log("Created test 20");
+    return shuffleArray(testArray);
   } catch (err) {
     console.log(err);
     return [];

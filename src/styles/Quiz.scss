@@ -1,4 +1,9 @@
 .quiz {
+  display: flex;
+  flex-direction: column;
+  height: 82vh;
+  justify-content: space-between;
+
   &__main__word {
     margin-top: 20px;
     text-align: center;
