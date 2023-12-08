@@ -97,4 +97,8 @@
       background-color: rgb(31, 98, 160);
     }
   }
+  &__links {
+    display: flex;
+    column-gap: 5px;
+  }
 }

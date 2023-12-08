@@ -30,7 +30,7 @@ export function QuizPage({ res }: QuizPageProp) {
   return (
     <div className="quiz__container">
       <form onSubmit={onSubmit} className="quiz__form">
-        <div style={{ position: "absolute", top: ".5rem", right: ".5rem" }}>
+        <div className="quiz__score">
           {currentStepIndex + 1} / {steps.length}
         </div>
         {step}

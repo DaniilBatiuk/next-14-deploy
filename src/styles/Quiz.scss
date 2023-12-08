@@ -1,7 +1,6 @@
 .quiz {
   display: flex;
   flex-direction: column;
-  height: 82vh;
   justify-content: space-between;
 
   &__main__word {
@@ -16,9 +15,14 @@
   }
 
   &__list {
+    width: 100%;
+    padding: 20px 15px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   &__variant {
@@ -28,7 +32,6 @@
     background-color: rgb(0, 62, 112);
     border-radius: 10px;
     padding: 15px 10px;
-
     &:hover {
       background-color: rgb(0, 91, 165);
     }

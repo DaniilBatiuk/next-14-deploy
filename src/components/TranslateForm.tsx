@@ -61,7 +61,13 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             onClick={() => {
               if (inputRef.current && inputRef.current?.value !== "") {
                 setIsExist(true);
-                handleAddWord(inputRef.current.value, state.translations.slice(0, 3));
+                const uniqueArray = state.translations.reduce((accumulator: string[], currentValue: string) => {
+                  if (!accumulator.includes(currentValue)) {
+                    accumulator.push(currentValue);
+                  }
+                  return accumulator;
+                }, []);
+                handleAddWord(inputRef.current.value.toLowerCase(), uniqueArray.slice(0, 3));
               }
             }}
           >
