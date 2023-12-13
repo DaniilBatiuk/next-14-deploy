@@ -1,11 +1,11 @@
-import { TranslateItem } from "@/components/TranslateItem";
 import "@/styles/DictionaryPage.scss";
-import { ITranslations, handleGetAllTranslations } from "@/functions/functions";
+
 import Link from "next/link";
+import { Suspense } from "react";
+import Loading from "@/app/dictionary/loading";
+import { DictLoading } from "@/components/DictLoading";
 
-export async function DictionaryPage() {
-  const res = await handleGetAllTranslations();
-
+export function DictionaryPage() {
   return (
     <div className="dictionary__container">
       <div className="dictionary__test">
@@ -19,7 +19,9 @@ export async function DictionaryPage() {
           </Link>
         </div>
       </div>
-      <div className="dictionary__list">{res?.length > 0 && res.map((el: ITranslations) => <TranslateItem key={el._id} translateItem={el} />)}</div>
+      <Suspense fallback={<Loading />}>
+        <DictLoading />
+      </Suspense>
     </div>
   );
 }
