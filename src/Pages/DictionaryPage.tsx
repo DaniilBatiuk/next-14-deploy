@@ -1,11 +1,11 @@
 import "@/styles/DictionaryPage.scss";
 
 import Link from "next/link";
-import { Suspense } from "react";
 import Loading from "@/app/dictionary/loading";
 import { DictLoading } from "@/components/DictLoading";
+import { Suspense } from "react";
 
-export function DictionaryPage() {
+export async function DictionaryPage() {
   return (
     <div className="dictionary__container">
       <div className="dictionary__test">
@@ -19,6 +19,7 @@ export function DictionaryPage() {
           </Link>
         </div>
       </div>
+
       <Suspense fallback={<Loading />}>
         <DictLoading />
       </Suspense>
