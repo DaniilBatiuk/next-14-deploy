@@ -1,5 +1,5 @@
 import { QuizPage } from "@/Pages/QuizPage";
-import { handleGetTestTwenty } from "@/functions/functions2";
+import { handleGetTestTwenty } from "@/functions/functions";
 
 export default async function QuizTwenty() {
   const res = await handleGetTestTwenty();
