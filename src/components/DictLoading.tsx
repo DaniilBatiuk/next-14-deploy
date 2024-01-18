@@ -3,6 +3,7 @@ import { TranslateItem } from "@/components/TranslateItem";
 import "@/styles/DictionaryPage.scss";
 import { ITranslations, handleGetAllTranslations } from "@/functions/functions";
 import { useQuery } from "@tanstack/react-query";
+import { DictionaryService } from "@/services/dictionary.service";
 
 export const getTodos = async () => {
   try {
@@ -20,15 +21,14 @@ export const getTodos = async () => {
 };
 
 export function DictLoading() {
-  const { status, data, error } = useQuery({ queryKey: ["todos"], queryFn: getTodos });
+  const { isLoading, data } = useQuery({
+    queryKey: ["dictionary"],
+    queryFn: DictionaryService.getDictionary,
+  });
 
-  if (status === "pending") {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return <div style={{ margin: "80px" }}>Loading...</div>;
   }
 
-  if (status === "error") {
-    return <p>Error: {error.message}</p>;
-  }
-
-  return <div className="dictionary__list">{data.res?.length > 0 && data.res.map((el: ITranslations) => <TranslateItem key={el._id} translateItem={el} />)}</div>;
+  return <div className="dictionary__list">{data?.res.length > 0 && data?.res.map((el: ITranslations) => <TranslateItem key={el._id} translateItem={el} />)}</div>;
 }

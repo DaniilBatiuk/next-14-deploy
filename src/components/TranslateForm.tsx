@@ -2,6 +2,7 @@
 
 import { languagesList } from "@/constants/languages";
 import { TranslationResult, handleAddWord, handleIsExistTranslations } from "@/functions/functions";
+import { DictionaryService } from "@/services/dictionary.service";
 import "@/styles/TranslateForm.scss";
 import { useRef, useState } from "react";
 
@@ -60,14 +61,7 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             className={isExist ? "form__icon2" : "form__icon"}
             onClick={() => {
               if (inputRef.current && inputRef.current?.value !== "") {
-                setIsExist(true);
-                const uniqueArray = state.translations.reduce((accumulator: string[], currentValue: string) => {
-                  if (!accumulator.includes(currentValue)) {
-                    accumulator.push(currentValue);
-                  }
-                  return accumulator;
-                }, []);
-                handleAddWord(inputRef.current.value.toLowerCase(), uniqueArray.slice(0, 3));
+                DictionaryService.addDictionary({ word: inputRef.current.value.toLowerCase(), translations: ["1", "2"] });
               }
             }}
           >
