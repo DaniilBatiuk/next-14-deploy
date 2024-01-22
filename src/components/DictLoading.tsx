@@ -6,7 +6,7 @@ import { DictionaryService } from "@/services/dictionary.service";
 
 export const getTodos = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/home", { cache: "no-store" });
+    const response = await fetch("https://next-14-deploy-git-main-daniilbatiuk.vercel.app/api/home", { cache: "no-store" });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
