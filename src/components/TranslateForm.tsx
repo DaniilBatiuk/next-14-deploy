@@ -1,8 +1,9 @@
 "use client";
 
+import axios from "@/axios";
 import { languagesList } from "@/constants/languages";
 import { TranslationResult, handleAddWord, handleIsExistTranslations } from "@/functions/functions";
-import { DictionaryService } from "@/services/dictionary.service";
+import { DictionaryService, IMessage } from "@/services/dictionary.service";
 import "@/styles/TranslateForm.scss";
 import { useRef, useState } from "react";
 
@@ -10,6 +11,16 @@ interface TranslationFormProps {
   formAction: any;
   state: TranslationResult;
 }
+
+const fetchData = async (word: string, translations: string[]) => {
+  try {
+    const { data } = await axios.post<IMessage>("/api/home", { word, translations });
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error fetching data from API");
+  }
+};
 
 export function TranslationForm({ formAction, state }: TranslationFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +72,7 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             className={isExist ? "form__icon2" : "form__icon"}
             onClick={async () => {
               if (inputRef.current && inputRef.current?.value !== "") {
-                await handleAddWord(inputRef.current.value.toLowerCase(), ["1", "2"]);
+                await fetchData(inputRef.current.value.toLowerCase(), ["1", "2"]);
               }
             }}
           >
