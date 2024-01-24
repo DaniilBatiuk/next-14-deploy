@@ -3,24 +3,14 @@
 import axios from "@/axios";
 import { languagesList } from "@/constants/languages";
 import { TranslationResult, handleAddWord, handleIsExistTranslations } from "@/functions/functions";
-import { DictionaryService, IMessage } from "@/services/dictionary.service";
 import "@/styles/TranslateForm.scss";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 
 interface TranslationFormProps {
   formAction: any;
   state: TranslationResult;
 }
-
-const fetchData = async (word: string, translations: string[]) => {
-  try {
-    const { data } = await axios.post<IMessage>("/api/home", { word, translations });
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error fetching data from API");
-  }
-};
 
 export function TranslationForm({ formAction, state }: TranslationFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,6 +29,12 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
       setIsExist(isExist);
     }
   }
+
+  const mutation = useMutation({
+    mutationFn: ({ word, translations }: { word: string; translations: string[] }) => {
+      return axios.post("/api/home", { word, translations });
+    },
+  });
 
   return (
     <form onSubmit={onSubmit} className="form">
@@ -72,7 +68,12 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             className={isExist ? "form__icon2" : "form__icon"}
             onClick={async () => {
               if (inputRef.current && inputRef.current?.value !== "") {
-                await fetchData(inputRef.current.value.toLowerCase(), ["1", "2"]);
+                const word = inputRef.current.value.toLowerCase();
+                const translations = ["1", "2"];
+                await mutation.mutate({ word: word, translations: translations });
+                const queryClient = new QueryClient();
+                console.log("revalidate 1");
+                queryClient.invalidateQueries({ queryKey: ["dictionary"] });
               }
             }}
           >

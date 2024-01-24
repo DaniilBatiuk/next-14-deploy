@@ -3,7 +3,6 @@ import { TranslateItem } from "@/components/TranslateItem";
 import "@/styles/DictionaryPage.scss";
 import { ITranslations, handleGetAllTranslations } from "@/functions/functions";
 import { QueryClient, useQuery } from "@tanstack/react-query";
-import { DictionaryService } from "@/services/dictionary.service";
 import { revalidateTag } from "next/cache";
 import { useState, useEffect } from "react";
 import axios from "@/axios";
