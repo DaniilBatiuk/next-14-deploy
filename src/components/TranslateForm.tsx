@@ -59,9 +59,9 @@ export function TranslationForm({ formAction, state }: TranslationFormProps) {
             height="32"
             viewBox="0 0 24 24"
             className={isExist ? "form__icon2" : "form__icon"}
-            onClick={() => {
+            onClick={async () => {
               if (inputRef.current && inputRef.current?.value !== "") {
-                DictionaryService.addDictionary({ word: inputRef.current.value.toLowerCase(), translations: ["1", "2"] });
+                await handleAddWord(inputRef.current.value.toLowerCase(), ["1", "2"]);
               }
             }}
           >

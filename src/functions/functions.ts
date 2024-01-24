@@ -83,7 +83,7 @@ export async function Translate(prevState: any, formData: FormData): Promise<Tra
 export const handleAddWord = async (word: string, translations: string[]) => {
   try {
     const translationData = { word, translations };
-
+    console.log("create");
     if (await handleIsExistTranslations(word)) {
       console.log("Translation is already exist");
     } else {
